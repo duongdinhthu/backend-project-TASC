@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import javax.sql.DataSource;
 
 @Configuration
@@ -38,6 +37,7 @@ import javax.sql.DataSource;
                                 .requestMatchers("/api/userservice/login"
                                         , "/api/userservice/patients/**"
                                         , "/api/userservice/doctors/**"
+                                        , "/api/userservice/departments/**"
                                         , "/api/userservice/staffs/**").permitAll()
                                 .requestMatchers("/api/userservice/patient/").hasRole("PATIENT")
                                 .requestMatchers("/api/userservice/doctor/").hasRole("DOCTOR")

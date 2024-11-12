@@ -42,7 +42,19 @@ public class Doctors extends Entitys {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", nullable = false)
+    private Departments department;
+
     public Doctors() {
+    }
+
+    public Departments getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Departments department) {
+        this.department = department;
     }
 
     public String getDoctorName() {

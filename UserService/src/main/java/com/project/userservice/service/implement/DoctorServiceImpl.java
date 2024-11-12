@@ -1,5 +1,6 @@
 package com.project.userservice.service.implement;
 
+import com.project.userservice.dto.DoctorDTO;
 import com.project.userservice.model.Doctors;
 import com.project.userservice.model.Role;
 import com.project.userservice.repository.DoctorsRepository;
@@ -7,6 +8,9 @@ import com.project.userservice.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -36,4 +40,22 @@ public class DoctorServiceImpl implements DoctorService {
 
         return doctorsRepository.findByDoctorEmail(email);
     }
+
+    @Override
+    public List<DoctorDTO> getDoctorsByDepartment(Integer departmentId) {
+        // Lấy danh sách bác sĩ từ repository
+        List<DoctorDTO> doctors = doctorsRepository.findDoctorsByDepartmentId(departmentId);
+
+        // Ánh xạ từ Doctors thành DoctorDTO
+        return doctors.stream()
+                .map(doctor -> new DoctorDTO(
+                        doctor.getId(),
+                        doctor.getDoctorName(),
+                        doctor.getDoctorDescription(),
+                        doctor.getDoctorPrice(),
+                        doctor.getDepartmentId()
+                ))
+                .collect(Collectors.toList());
+    }
+
 }
