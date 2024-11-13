@@ -46,7 +46,7 @@ public class AppointmentController {
         Appointment appointment = mapper.convertValue(requestData, Appointment.class);
         PaymentRequest paymentRequest = mapper.convertValue(requestData, PaymentRequest.class);
         Map<String, Object> response = new HashMap<>();
-        try{
+        try {
             appointment.setPatientId(appointmentService.getPatientFromApi(requestData.getPatientEmail(), requestData.getPatientPhone(), requestData.getPatientName()));
             paymentRequest.setPatientId(appointmentService.getPatientFromApi(requestData.getPatientEmail(), requestData.getPatientPhone(), requestData.getPatientName()));
             paymentRequest.setAppointmentId(appointmentService.saveAppointment(appointment).getAppointmentId());
@@ -56,49 +56,15 @@ public class AppointmentController {
             response.put("appointment", savedAppointment);
             response.put("paymentSuccess", paymentSuccess);
             return ResponseEntity.ok(response);
-        }catch (Exception e){
+        } catch (Exception e) {
             response.put("appointment", null);
             response.put("paymentSuccess", false);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);        }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
     @PostMapping("/lock")
     public ResponseEntity<ResponseDTO> lockSlot(@RequestBody LockSlotDTO lockSlotDTO) {
-        System.out.println(lockSlotDTO.toString());
-        boolean isSlotLocked = lockSlotService.isSlotLocked(lockSlotDTO);  // Kiểm tra slot đã được khóa chưa
-        boolean isCodeRandom = lockSlotService.checkIfCodeExists(lockSlotDTO.getRandomCode());  // Kiểm tra random code
-
-        System.out.println("slot locked: " + isSlotLocked);
-        System.out.println("isCodeRandom : " + isCodeRandom);
-
-        // Chuyển điều kiện thành giá trị có thể so sánh với switch-case
-        String caseSwitch = (isCodeRandom ? "RANDOM" : "NOT_RANDOM") + (isSlotLocked ? "_LOCKED" : "_UNLOCKED");
-
-        switch (caseSwitch) {
-            case "RANDOM_LOCKED":
-                lockSlotService.updateKey(lockSlotDTO);
-                System.out.println("Đã khóa slot mới, nhả slot cũ!");
-                lockSlotService.getAllLockSlots();
-                return ResponseEntity.ok(new ResponseDTO(200, "Đã khóa slot mới, nhả slot cũ!"));
-
-            case "RANDOM_UNLOCKED":
-                System.out.println("Slot này đã được khóa trước đó, không khóa lại!");
-                lockSlotService.getAllLockSlots();
-                return ResponseEntity.status(400).body(new ResponseDTO(400, "Slot này đã được khóa trước đó, không khóa lại!"));
-
-            case "NOT_RANDOM_LOCKED":
-                lockSlotService.lockSlot(lockSlotDTO);
-                System.out.println("Slot đã được lock!");
-                lockSlotService.getAllLockSlots();
-                return ResponseEntity.ok(new ResponseDTO(200, "Slot đã được khóa!"));
-
-            case "NOT_RANDOM_UNLOCKED":
-                System.out.println("Slot này đã khóa, vui lòng chọn slot khác!");
-                lockSlotService.getAllLockSlots();
-                return ResponseEntity.status(409).body(new ResponseDTO(409, "Slot này đã khóa, vui lòng chọn slot khác!"));
-
-            default:
-                return ResponseEntity.status(500).body(new ResponseDTO(500, "Lỗi không xác định"));
-        }
+        return lockSlotService.getLockSlotByCode(lockSlotDTO);
     }
 }

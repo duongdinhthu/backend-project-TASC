@@ -1,7 +1,9 @@
 package com.project.appoinmentservice.service.implement;
 
 import com.project.appoinmentservice.dto.LockSlotDTO;
+import com.project.appoinmentservice.dto.ResponseDTO;
 import com.project.appoinmentservice.service.LockSlotService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -52,6 +54,47 @@ public class LockSlotServiceImpl implements LockSlotService {
             System.out.println(entry.getKey() + "  : " + entry.getValue().getRandomCode());
         }
     }
+
+    @Override
+    public ResponseEntity<ResponseDTO> getLockSlotByCode(LockSlotDTO lockSlotDTO) {
+        System.out.println(lockSlotDTO.toString());
+        boolean isSlotLocked = isSlotLocked(lockSlotDTO);  // Kiểm tra slot đã được khóa chưa
+        boolean isCodeRandom = checkIfCodeExists(lockSlotDTO.getRandomCode());  // Kiểm tra random code
+
+        System.out.println("slot locked: " + isSlotLocked);
+        System.out.println("isCodeRandom : " + isCodeRandom);
+
+        // Chuyển điều kiện thành giá trị có thể so sánh với switch-case
+        String caseSwitch = (isCodeRandom ? "RANDOM" : "NOT_RANDOM") + (isSlotLocked ? "_LOCKED" : "_UNLOCKED");
+
+        switch (caseSwitch) {
+            case "RANDOM_LOCKED":
+                updateKey(lockSlotDTO);
+                System.out.println("Đã khóa slot mới, nhả slot cũ!");
+                getAllLockSlots();
+                return ResponseEntity.ok(new ResponseDTO(200, "Đã khóa slot mới, nhả slot cũ!"));
+
+            case "RANDOM_UNLOCKED":
+                System.out.println("Slot này đã được khóa trước đó, không khóa lại!");
+                getAllLockSlots();
+                return ResponseEntity.status(400).body(new ResponseDTO(400, "Slot này đã được khóa trước đó, không khóa lại!"));
+
+            case "NOT_RANDOM_LOCKED":
+                lockSlot(lockSlotDTO);
+                System.out.println("Slot đã được lock!");
+                getAllLockSlots();
+                return ResponseEntity.ok(new ResponseDTO(200, "Slot đã được khóa!"));
+
+            case "NOT_RANDOM_UNLOCKED":
+                System.out.println("Slot này đã khóa, vui lòng chọn slot khác!");
+                getAllLockSlots();
+                return ResponseEntity.status(409).body(new ResponseDTO(409, "Slot này đã khóa, vui lòng chọn slot khác!"));
+
+            default:
+                return ResponseEntity.status(500).body(new ResponseDTO(500, "Lỗi không xác định"));
+        }
+    }
+
     // Khóa slot
     @Override
     public void lockSlot(LockSlotDTO lockSlotDTO) {
@@ -86,5 +129,7 @@ public class LockSlotServiceImpl implements LockSlotService {
         System.out.println("key được tạo: " + key);
         return key;
     }
+
+
 
 }
