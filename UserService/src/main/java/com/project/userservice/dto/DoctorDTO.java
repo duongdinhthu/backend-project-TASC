@@ -3,17 +3,13 @@ package com.project.userservice.dto;
 import java.math.BigDecimal;
 
 public class DoctorDTO {
-    private int id;
+    private Integer id;
     private String doctorName;
-    private String doctorEmail;
-    private String doctorPhone;
-    private String doctorAddress;
     private String doctorDescription;
     private BigDecimal doctorPrice;
-    private int departmentId;
+    private Integer departmentId;
 
-    // Constructors
-    public DoctorDTO(int id, String doctorName, String doctorDescription, BigDecimal doctorPrice, int departmentId) {
+    public DoctorDTO(Integer id, String doctorName, String doctorDescription, BigDecimal doctorPrice, Integer departmentId) {
         this.id = id;
         this.doctorName = doctorName;
         this.doctorDescription = doctorDescription;
@@ -21,15 +17,11 @@ public class DoctorDTO {
         this.departmentId = departmentId;
     }
 
-    public DoctorDTO(Integer id, String doctorName, String doctorDescription, BigDecimal doctorPrice, Integer departmentId) {
-    }
-
-    // Getters and Setters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,30 +31,6 @@ public class DoctorDTO {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
-    }
-
-    public String getDoctorEmail() {
-        return doctorEmail;
-    }
-
-    public void setDoctorEmail(String doctorEmail) {
-        this.doctorEmail = doctorEmail;
-    }
-
-    public String getDoctorPhone() {
-        return doctorPhone;
-    }
-
-    public void setDoctorPhone(String doctorPhone) {
-        this.doctorPhone = doctorPhone;
-    }
-
-    public String getDoctorAddress() {
-        return doctorAddress;
-    }
-
-    public void setDoctorAddress(String doctorAddress) {
-        this.doctorAddress = doctorAddress;
     }
 
     public String getDoctorDescription() {
@@ -81,11 +49,13 @@ public class DoctorDTO {
         this.doctorPrice = doctorPrice;
     }
 
-    public int getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
+
+    // Getters và Setters
 }

@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class AppointmentRequestDTO {
     private Integer appointmentId;
-    private String patientId;
-    private String doctorId;
-    private String staffId;
+    private Integer patientId;
+    private Integer doctorId;
+    private Integer staffId;
     private Date appointmentDate;
     private Date medicalDay;
     private Integer slot;
@@ -62,27 +62,27 @@ public class AppointmentRequestDTO {
         this.patientName = patientName;
     }
 
-    public String getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(String patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
-    public String getDoctorId() {
+    public Integer getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(String doctorId) {
+    public void setDoctorId(Integer doctorId) {
         this.doctorId = doctorId;
     }
 
-    public String getStaffId() {
+    public Integer getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(String staffId) {
+    public void setStaffId(Integer staffId) {
         this.staffId = staffId;
     }
 

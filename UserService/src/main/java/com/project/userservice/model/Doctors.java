@@ -144,4 +144,22 @@ public class Doctors extends Entitys {
     public void setDoctorStatus(String doctorStatus) {
         this.doctorStatus = doctorStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Doctors{" +
+                "doctorName='" + doctorName + '\'' +
+                ", doctorPhone='" + doctorPhone + '\'' +
+                ", doctorAddress='" + doctorAddress + '\'' +
+                ", doctorEmail='" + doctorEmail + '\'' +
+                ", doctorPassword='" + doctorPassword + '\'' +
+                ", doctorImage='" + doctorImage + '\'' +
+                ", doctorPrice=" + doctorPrice +
+                ", doctorSummary='" + doctorSummary + '\'' +
+                ", doctorDescription='" + doctorDescription + '\'' +
+                ", doctorStatus='" + doctorStatus + '\'' +
+                ", role=" + role +
+                ", department=" + department +
+                '}';
+    }
 }

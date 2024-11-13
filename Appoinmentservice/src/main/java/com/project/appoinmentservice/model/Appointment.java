@@ -17,13 +17,13 @@ public class Appointment {
     private Integer appointmentId;
 
     @Column(name = "patient_id")
-    private String patientId;
+    private Integer patientId;
 
     @Column(name = "doctor_id")
-    private String doctorId;
+    private Integer doctorId;
 
     @Column(name = "staff_id")
-    private String staffId;
+    private Integer staffId;
 
     @Column(name = "appointment_date")
     private Date appointmentDate;
@@ -43,13 +43,6 @@ public class Appointment {
     @Column(name = "patientEmail")  // precision: tổng số chữ số, scale: số chữ số sau dấu thập phân
     private String patientEmail;
 
-    public String getPatientEmail() {
-        return patientEmail;
-    }
-
-    public void setPatientEmail(String patientEmail) {
-        this.patientEmail = patientEmail;
-    }
 
     public Integer getAppointmentId() {
         return appointmentId;
@@ -59,12 +52,28 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
-    public String getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(String patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
+    }
+
+    public Integer getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(Integer doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public Integer getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
     }
 
     public Date getAppointmentDate() {
@@ -81,22 +90,6 @@ public class Appointment {
 
     public void setMedicalDay(Date medicalDay) {
         this.medicalDay = medicalDay;
-    }
-
-    public String getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public String getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
     }
 
     public Integer getSlot() {
@@ -121,6 +114,14 @@ public class Appointment {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getPatientEmail() {
+        return patientEmail;
+    }
+
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
     }
 
     // Phương thức được gọi trước khi lưu bản ghi mới vào cơ sở dữ liệu

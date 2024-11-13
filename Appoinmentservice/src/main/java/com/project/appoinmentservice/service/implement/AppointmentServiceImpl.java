@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,7 +21,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final RestTemplate restTemplate  = new RestTemplate();
 
-    public String getPatientFromApi(String patientEmail, String patientPhone, String patientName) {
+    public Integer getPatientFromApi(String patientEmail, String patientPhone, String patientName) {
         String url = "http://localhost:8080/api/userservice/patients/check";
         PatientRequest requestBody = new PatientRequest(patientEmail, patientPhone, patientName);
         System.out.println(requestBody);
@@ -34,7 +35,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         Map<String, Object> responseBody = response.getBody();
         if (responseBody != null && responseBody.containsKey("id")) {
             // Lấy patientId dưới dạng String
-            return responseBody.get("id").toString();
+            return (Integer)responseBody.get("id");
         } else {
             // Xử lý trường hợp không tìm thấy patientId
             throw new RuntimeException("Không tìm thấy patientId trong phản hồi");
@@ -63,6 +64,10 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
+    @Override
+    public List<Appointment> getAppointmentsByDoctor(Integer doctorId) {
+        return appointmentRepository.findByDoctorId(doctorId);
+    }
 
 
 }

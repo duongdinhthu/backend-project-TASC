@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PaymentRequest {
-    private String patientId;
+    private Integer patientId;
     private Integer appointmentId;
     private BigDecimal paymentAmount;
     private String paymentCurrency;
@@ -15,9 +15,6 @@ public class PaymentRequest {
     // Getters and setters
 
 
-    public String getPatientId() {
-        return patientId;
-    }
 
     public String getPaymentEncryption() {
         return paymentEncryption;
@@ -27,7 +24,11 @@ public class PaymentRequest {
         this.paymentEncryption = paymentEncryption;
     }
 
-    public void setPatientId(String patientId) {
+    public Integer getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 

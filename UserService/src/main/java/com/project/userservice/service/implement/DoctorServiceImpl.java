@@ -44,8 +44,10 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<DoctorDTO> getDoctorsByDepartment(Integer departmentId) {
         // Lấy danh sách bác sĩ từ repository
-        List<DoctorDTO> doctors = doctorsRepository.findDoctorsByDepartmentId(departmentId);
-
+        List<Doctors> doctors = doctorsRepository.findByDepartmentId(departmentId);
+        for (Doctors doctor : doctors) {
+            System.out.println(doctor.toString());
+        }
         // Ánh xạ từ Doctors thành DoctorDTO
         return doctors.stream()
                 .map(doctor -> new DoctorDTO(
@@ -53,7 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
                         doctor.getDoctorName(),
                         doctor.getDoctorDescription(),
                         doctor.getDoctorPrice(),
-                        doctor.getDepartmentId()
+                        doctor.getDepartment().getId()
                 ))
                 .collect(Collectors.toList());
     }

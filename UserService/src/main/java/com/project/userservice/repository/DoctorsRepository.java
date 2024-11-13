@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DoctorsRepository extends JpaRepository<Doctors, Integer> {
     Doctors findByDoctorEmail(String email);
-    List<DoctorDTO> findDoctorsByDepartmentId(Integer id);
+    List<Doctors> findByDepartmentId(Integer departmentId);
 }

@@ -2,7 +2,6 @@ package com.project.getway.filter;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,8 +11,10 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.cors.CorsConfiguration;
 
 import javax.crypto.SecretKey;
+import java.util.Arrays;
 
 @Component
 public class AuthenFilter extends AbstractGatewayFilterFactory<AuthenFilter.Config> {
@@ -32,6 +33,16 @@ public class AuthenFilter extends AbstractGatewayFilterFactory<AuthenFilter.Conf
     @Override
     public GatewayFilter apply(Config config) {
         return (ServerWebExchange exchange, GatewayFilterChain chain) -> {
+            // Cấu hình CORS cho phép tất cả domain, method, header
+            CorsConfiguration corsConfig = new CorsConfiguration();
+            corsConfig.setAllowedOriginPatterns(Arrays.asList("*"));  // Cho phép tất cả domain
+            corsConfig.setAllowedMethods(Arrays.asList("*"));  // Cho phép tất cả methods
+            corsConfig.setAllowedHeaders(Arrays.asList("*"));  // Cho phép tất cả headers
+            corsConfig.setAllowCredentials(true);  // Cho phép gửi cookie nếu cần
+            exchange.getResponse().getHeaders().add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+            exchange.getResponse().getHeaders().add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "*");
+            exchange.getResponse().getHeaders().add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
+
             // Lấy token từ header Authorization
             String token = getTokenFromRequest(exchange);
 
@@ -51,6 +62,7 @@ public class AuthenFilter extends AbstractGatewayFilterFactory<AuthenFilter.Conf
             exchange.getAttributes().put("sub", email);
             exchange.getAttributes().put("role", role);
             System.out.println("Lưu thông tin : " + userId +" " + email +" " + role);
+
             return chain.filter(exchange);
         };
     }
@@ -92,4 +104,5 @@ public class AuthenFilter extends AbstractGatewayFilterFactory<AuthenFilter.Conf
                 .parseClaimsJws(token)
                 .getBody();
     }
+
 }
