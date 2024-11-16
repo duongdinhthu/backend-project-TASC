@@ -1,4 +1,4 @@
-package com.project.getway;
+package com.project.apigetway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class GetwayApplication {
+public class ApigetwayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GetwayApplication.class, args);
+        SpringApplication.run(ApigetwayApplication.class, args);
     }
 
 }

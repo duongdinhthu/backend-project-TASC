@@ -2,40 +2,105 @@ package com.project.appoinmentservice.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AppointmentRequestDTO {
-    private Integer appointmentId;
     private Integer patientId;
     private Integer doctorId;
     private Integer staffId;
-    private Date appointmentDate;
-    private Date medicalDay;
+    private LocalDate appointmentDate; // Chỉ chứa ngày
+    private LocalDate medicalDay;      // Chỉ chứa ngày
     private Integer slot;
     private String status;
-    private BigDecimal price;
+    private BigDecimal price;          // Giá dịch vụ
     private String patientEmail;
     private String patientPhone;
     private String patientName;
-    private BigDecimal paymentAmount;
     private String paymentCurrency;
     private String paymentEncryption;
-    // Getter, Setter
 
-    public Integer getAppointmentId() {
-        return appointmentId;
+    // Getter và Setter
+    public Integer getPatientId() {
+        return patientId;
     }
 
-    public String getPaymentEncryption() {
-        return paymentEncryption;
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
     }
 
-    public void setPaymentEncryption(String paymentEncryption) {
-        this.paymentEncryption = paymentEncryption;
+    public Integer getDoctorId() {
+        return doctorId;
     }
 
-    public void setAppointmentId(Integer appointmentId) {
-        this.appointmentId = appointmentId;
+    public void setDoctorId(Integer doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public Integer getStaffId() {
+        return staffId;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentRequestDTO{" +
+                " patientId=" + patientId +
+                ", doctorId=" + doctorId +
+                ", staffId=" + staffId +
+                ", appointmentDate=" + appointmentDate +
+                ", medicalDay=" + medicalDay +
+                ", slot=" + slot +
+                ", status='" + status + '\'' +
+                ", price=" + price +
+                ", patientEmail='" + patientEmail + '\'' +
+                ", patientPhone='" + patientPhone + '\'' +
+                ", patientName='" + patientName + '\'' +
+                ", paymentCurrency='" + paymentCurrency + '\'' +
+                ", paymentEncryption='" + paymentEncryption + '\'' +
+                '}';
+    }
+
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
+    }
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public LocalDate getMedicalDay() {
+        return medicalDay;
+    }
+
+    public void setMedicalDay(LocalDate medicalDay) {
+        this.medicalDay = medicalDay;
+    }
+
+    public Integer getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Integer slot) {
+        this.slot = slot;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getPatientEmail() {
@@ -62,54 +127,6 @@ public class AppointmentRequestDTO {
         this.patientName = patientName;
     }
 
-    public Integer getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
-    }
-
-    public Integer getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(Integer doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public Integer getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(Integer staffId) {
-        this.staffId = staffId;
-    }
-
-    public Date getAppointmentDate() {
-        return appointmentDate;
-    }
-
-    public void setAppointmentDate(Date appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
-    public Date getMedicalDay() {
-        return medicalDay;
-    }
-
-    public void setMedicalDay(Date medicalDay) {
-        this.medicalDay = medicalDay;
-    }
-
-    public BigDecimal getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(BigDecimal paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
-
     public String getPaymentCurrency() {
         return paymentCurrency;
     }
@@ -118,27 +135,11 @@ public class AppointmentRequestDTO {
         this.paymentCurrency = paymentCurrency;
     }
 
-    public Integer getSlot() {
-        return slot;
+    public String getPaymentEncryption() {
+        return paymentEncryption;
     }
 
-    public void setSlot(Integer slot) {
-        this.slot = slot;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPaymentEncryption(String paymentEncryption) {
+        this.paymentEncryption = paymentEncryption;
     }
 }

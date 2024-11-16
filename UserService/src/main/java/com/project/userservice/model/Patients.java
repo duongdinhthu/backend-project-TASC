@@ -13,13 +13,13 @@ public class Patients extends Entitys {
     @Column(name = "patient_name", nullable = false)
     private String patientName;
 
-    @Column(name = "patient_phone", nullable = false, unique = true)
+    @Column(name = "patient_phone", nullable = false)
     private String patientPhone;
 
     @Column(name = "zip_code")
     private String zipCode;
 
-    @Column(name = "patient_email", unique = true)
+    @Column(name = "patient_email",nullable = false, unique = true)
     private String patientEmail;
 
     @Column(name = "patient_password", nullable = false)

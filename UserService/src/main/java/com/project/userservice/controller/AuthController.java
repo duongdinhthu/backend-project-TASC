@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/userservice")
+@RequestMapping("/api/userservice/notjwt")
 public class AuthController {
     @Autowired
     private AuthService authService;

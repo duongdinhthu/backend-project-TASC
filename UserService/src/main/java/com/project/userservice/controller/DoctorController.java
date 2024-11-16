@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/userservice/doctors")
+@RequestMapping("/api/userservice/notjwt/doctors")
 public class DoctorController {
 
     @Autowired

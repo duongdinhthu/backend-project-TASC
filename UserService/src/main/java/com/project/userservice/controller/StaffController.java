@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/userservice/staffs")
+@RequestMapping("/api/userservice/notjwt/staffs")
 public class StaffController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;

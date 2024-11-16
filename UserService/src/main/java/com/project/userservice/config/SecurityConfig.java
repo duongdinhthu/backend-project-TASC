@@ -12,50 +12,35 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // Đảm bảo có dòng này
-    public class SecurityConfig {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
 
-    private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
-    private final JwtRequestFilter jwtRequestFilter; // Thêm bộ lọc JWT
+    private final JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfig(DataSource dataSource, CustomUserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
-        this.dataSource = dataSource;
+    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.userDetailsService = userDetailsService;
-        this.jwtRequestFilter = jwtRequestFilter; // Khởi tạo bộ lọc JWT
+        this.jwtRequestFilter = jwtRequestFilter;
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/userservice/login"
-                                        , "/api/userservice/patients/**"
-                                        , "/api/userservice/doctors/**"
-                                        , "/api/userservice/departments/**"
-                                        , "/api/userservice/staffs/**").permitAll()
-                                .requestMatchers("/api/userservice/patient/").hasRole("PATIENT")
-                                .requestMatchers("/api/userservice/doctor/").hasRole("DOCTOR")
-                                .requestMatchers("/api/userservice/staff/").hasRole("STAFF")
-                                .requestMatchers("/api/userservice/admin/").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .requestMatchers("/api/userservice/notjwt/**").permitAll() // Không yêu cầu JWT
+                                .requestMatchers("/api/userservice/jwt/patient/").hasRole("PATIENT") // Quyền bệnh nhân
+                                .requestMatchers("/api/userservice/jwt/doctor/").hasRole("DOCTOR")   // Quyền bác sĩ
+                                .requestMatchers("/api/userservice/jwt/staff/").hasRole("STAFF")     // Quyền nhân viên
+                                .requestMatchers("/api/userservice/jwt/admin/").hasRole("ADMIN")     // Quyền admin
+                                .anyRequest().authenticated() // Các API khác yêu cầu xác thực
                 )
-                .csrf(csrf -> csrf.disable())
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class) // Thêm bộ lọc JWT vào chuỗi bộ lọc
-                .cors(cors -> cors.configurationSource(request -> {
-                    var corsConfig = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfig.setAllowedOrigins(java.util.Collections.singletonList("http://localhost:4200")); // Cho phép tất cả các nguồn
-                    corsConfig.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")); // Cho phép tất cả các phương thức
-                    corsConfig.setAllowedHeaders(java.util.Arrays.asList("*")); // Cho phép tất cả các header
-                    corsConfig.setAllowCredentials(true); // Cho phép gửi cookie
-                    return corsConfig;
-                }))
-                .authenticationManager(authManager(http)); // Thêm AuthenticationManager vào cấu hình
+                .csrf(csrf -> csrf.disable()) // Tắt CSRF
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Thêm bộ lọc JWT
 
         return http.build();
     }
@@ -66,7 +51,7 @@ import javax.sql.DataSource;
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
                 .userDetailsService(userDetailsService) // Sử dụng CustomUserDetailsService
-                .passwordEncoder(passwordEncoder()); // Mã hóa mật khẩu
+                .passwordEncoder(passwordEncoder()); // Sử dụng mã hóa mật khẩu
         return authenticationManagerBuilder.build();
     }
 

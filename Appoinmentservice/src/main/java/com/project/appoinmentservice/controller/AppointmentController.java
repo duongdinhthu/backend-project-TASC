@@ -1,6 +1,8 @@
 package com.project.appoinmentservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.project.appoinmentservice.dto.AppointmentRequestDTO;
 import com.project.appoinmentservice.dto.LockSlotDTO;
 import com.project.appoinmentservice.dto.PaymentRequest;
@@ -42,26 +44,11 @@ public class AppointmentController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> register(@RequestBody AppointmentRequestDTO requestData) {
-        ObjectMapper mapper = new ObjectMapper();
-        Appointment appointment = mapper.convertValue(requestData, Appointment.class);
-        PaymentRequest paymentRequest = mapper.convertValue(requestData, PaymentRequest.class);
-        Map<String, Object> response = new HashMap<>();
-        try {
-            appointment.setPatientId(appointmentService.getPatientFromApi(requestData.getPatientEmail(), requestData.getPatientPhone(), requestData.getPatientName()));
-            paymentRequest.setPatientId(appointmentService.getPatientFromApi(requestData.getPatientEmail(), requestData.getPatientPhone(), requestData.getPatientName()));
-            paymentRequest.setAppointmentId(appointmentService.saveAppointment(appointment).getAppointmentId());
-            boolean paymentSuccess = appointmentService.createPayment(paymentRequest);
-            System.out.println(paymentSuccess);
-            Appointment savedAppointment = appointmentService.saveAppointment(appointment);
-            response.put("appointment", savedAppointment);
-            response.put("paymentSuccess", paymentSuccess);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            response.put("appointment", null);
-            response.put("paymentSuccess", false);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
+        System.out.println("dữ liệu đã nhận " + requestData.toString());
+        return appointmentService.register(requestData);
+
     }
+
 
     @PostMapping("/lock")
     public ResponseEntity<ResponseDTO> lockSlot(@RequestBody LockSlotDTO lockSlotDTO) {
