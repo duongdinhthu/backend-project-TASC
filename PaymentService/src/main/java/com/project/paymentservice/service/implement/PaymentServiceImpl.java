@@ -37,7 +37,6 @@ public class PaymentServiceImpl implements PaymentService {
         if (paymentOptional.isPresent()) {
             Payment payment = paymentOptional.get();
             payment.setPaymentAmount(paymentDetails.getPaymentAmount());
-            payment.setPaymentCurrency(paymentDetails.getPaymentCurrency());
             payment.setPaymentStatus(paymentDetails.getPaymentStatus());
             payment.setUpdatedAt(paymentDetails.getUpdatedAt());
 

@@ -2,9 +2,11 @@ package com.project.paymentservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.paymentservice.dto.PaymentDTO;
+import com.project.paymentservice.dto.PaymentRequestOrderId;
 import com.project.paymentservice.model.Payment;
 import com.project.paymentservice.model.PaymentStatus;
 import com.project.paymentservice.service.PaymentService;
+import com.project.paymentservice.service.PaypalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,18 +24,38 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private PaypalService paypalService;
     // Create Payment
     @PostMapping("/create")
-    public ResponseEntity<Payment> createPayment(@RequestBody PaymentDTO paymentDTO) {
-        System.out.println(paymentDTO.toString());
-        ObjectMapper mapper = new ObjectMapper();
-        Payment createdPayment = mapper.convertValue(paymentDTO, Payment.class);
-        createdPayment.setPaymentStatus(PaymentStatus.PENDING); // Giả sử status mặc định là PENDING
-        createdPayment.setCreatedAt(LocalDateTime.now()); // Thời gian tạo
-        createdPayment.setUpdatedAt(LocalDateTime.now()); // Thời gian cập nhật
-        Payment savedPayment = paymentService.createPayment(createdPayment);
-        return new ResponseEntity<>(savedPayment, HttpStatus.CREATED);
+    public ResponseEntity<Payment> createPayment(@RequestBody PaymentRequestOrderId paymentRequestOrderId) {
+        System.out.println("Dữ liệu đã nhận :" + paymentRequestOrderId.toString());
+
+        // Tạo đối tượng thanh toán
+
+
+        // Lưu thanh toán vào cơ sở dữ liệu
+
+        // Xác thực thanh toán với PayPal
+        // Bỏ facilitatorAccessToken và chỉ sử dụng paymentID và payerID
+        boolean isPaymentValid = paypalService.verifyPayment(paymentRequestOrderId.getOrderId());
+
+        // Cập nhật trạng thái thanh toán
+        if (isPaymentValid) {
+//            savedPayment.setPaymentStatus(PaymentStatus.COMPLETED); // Nếu thanh toán hợp lệ, cập nhật trạng thái
+            System.out.println("xác thực thanh toán thành công");
+        } else {
+//            savedPayment.setPaymentStatus(PaymentStatus.FAILED); // Nếu thanh toán không hợp lệ
+            System.out.println("xác thực thanh toán thất bại");
+
+        }
+
+//        paymentService.updatePayment(savedPayment.getId(), savedPayment); // Cập nhật lại trạng thái thanh toán trong DB
+
+        // Trả về phản hồi
+        return null;
     }
+
 
 
     // Get All Payments

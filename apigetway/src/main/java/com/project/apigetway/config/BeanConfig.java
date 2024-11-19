@@ -31,6 +31,8 @@ public class BeanConfig {
                 .route("UserServicePublic", r -> r.path("/api/userservice/notjwt/**")
                         .uri("lb://USERSERVICE"))  // Load balance đến USERSERVICE (không cần filter)
 
+                .route("Transactionn", r -> r.path("/api/transactions/**")
+                        .uri("lb://TRANSACTIONN"))
                 // Route cho AppointmentService
                 .route("AppoinmentService", r -> r.path("/api/appointments/**")
                         .filters(f -> f.filter(authenFilter))  // Áp dụng AuthenFilter

@@ -36,4 +36,13 @@ public class PatientRequest {
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
+
+    @Override
+    public String toString() {
+        return "PatientRequest{" +
+                "patientEmail='" + patientEmail + '\'' +
+                ", patientPhone='" + patientPhone + '\'' +
+                ", patientName='" + patientName + '\'' +
+                '}';
+    }
 }

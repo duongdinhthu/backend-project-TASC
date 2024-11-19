@@ -12,14 +12,19 @@ public class AppointmentRequestDTO {
     private LocalDate medicalDay;      // Chỉ chứa ngày
     private Integer slot;
     private String status;
-    private BigDecimal price;          // Giá dịch vụ
     private String patientEmail;
     private String patientPhone;
     private String patientName;
-    private String paymentCurrency;
-    private String paymentEncryption;
+    private String orderID;            // Thêm trường orderID
+    private String payerID;            // Thêm trường payerID
+    private String paymentID;          // Thêm trường paymentID
+    private String paymentSource;      // Thêm trường paymentSource
+    private String facilitatorAccessToken; // Thêm trường facilitatorAccessToken
+    private BigDecimal paymentAmount;  // Số tiền thanh toán
 
-    // Getter và Setter
+    public AppointmentRequestDTO() {
+    }
+
     public Integer getPatientId() {
         return patientId;
     }
@@ -38,25 +43,6 @@ public class AppointmentRequestDTO {
 
     public Integer getStaffId() {
         return staffId;
-    }
-
-    @Override
-    public String toString() {
-        return "AppointmentRequestDTO{" +
-                " patientId=" + patientId +
-                ", doctorId=" + doctorId +
-                ", staffId=" + staffId +
-                ", appointmentDate=" + appointmentDate +
-                ", medicalDay=" + medicalDay +
-                ", slot=" + slot +
-                ", status='" + status + '\'' +
-                ", price=" + price +
-                ", patientEmail='" + patientEmail + '\'' +
-                ", patientPhone='" + patientPhone + '\'' +
-                ", patientName='" + patientName + '\'' +
-                ", paymentCurrency='" + paymentCurrency + '\'' +
-                ", paymentEncryption='" + paymentEncryption + '\'' +
-                '}';
     }
 
     public void setStaffId(Integer staffId) {
@@ -95,13 +81,6 @@ public class AppointmentRequestDTO {
         this.status = status;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 
     public String getPatientEmail() {
         return patientEmail;
@@ -127,19 +106,75 @@ public class AppointmentRequestDTO {
         this.patientName = patientName;
     }
 
-    public String getPaymentCurrency() {
-        return paymentCurrency;
+
+
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setPaymentCurrency(String paymentCurrency) {
-        this.paymentCurrency = paymentCurrency;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
-    public String getPaymentEncryption() {
-        return paymentEncryption;
+    public String getPayerID() {
+        return payerID;
     }
 
-    public void setPaymentEncryption(String paymentEncryption) {
-        this.paymentEncryption = paymentEncryption;
+    public void setPayerID(String payerID) {
+        this.payerID = payerID;
+    }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
+    }
+
+    public String getPaymentSource() {
+        return paymentSource;
+    }
+
+    public void setPaymentSource(String paymentSource) {
+        this.paymentSource = paymentSource;
+    }
+
+    public String getFacilitatorAccessToken() {
+        return facilitatorAccessToken;
+    }
+
+    public void setFacilitatorAccessToken(String facilitatorAccessToken) {
+        this.facilitatorAccessToken = facilitatorAccessToken;
+    }
+
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentRequestDTO{" +
+                "patientId=" + patientId +
+                ", doctorId=" + doctorId +
+                ", staffId=" + staffId +
+                ", appointmentDate=" + appointmentDate +
+                ", medicalDay=" + medicalDay +
+                ", slot=" + slot +
+                ", status='" + status + '\'' +
+                ", patientEmail='" + patientEmail + '\'' +
+                ", patientPhone='" + patientPhone + '\'' +
+                ", patientName='" + patientName + '\'' +
+                ", orderID='" + orderID + '\'' +
+                ", payerID='" + payerID + '\'' +
+                ", paymentID='" + paymentID + '\'' +
+                ", paymentSource='" + paymentSource + '\'' +
+                ", facilitatorAccessToken='" + facilitatorAccessToken + '\'' +
+                ", paymentAmount=" + paymentAmount +
+                '}';
     }
 }

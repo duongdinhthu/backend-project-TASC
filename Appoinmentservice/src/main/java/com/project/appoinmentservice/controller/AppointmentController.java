@@ -33,9 +33,6 @@ public class AppointmentController {
     @GetMapping("/checkslot/{doctorId}")
     public ResponseEntity<List<Appointment>> getDoctorAppointments(@PathVariable Integer doctorId) {
         List<Appointment> appointments = appointmentService.getAppointmentsByDoctor(doctorId);
-        for (Appointment appointment : appointments) {
-            System.out.println(appointments);
-        }
         if (appointments.isEmpty()) {
             return ResponseEntity.noContent().build(); // Trả về 204 nếu không có lịch hẹn nào
         }

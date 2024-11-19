@@ -34,10 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         // Bỏ qua kiểm tra JWT cho các API không cần xác thực
-        if (requestURI.startsWith("/api/userservice/login") ||
-                requestURI.startsWith("/api/userservice/patients/register") ||
-                requestURI.startsWith("/api/userservice/doctors/register") ||
-                requestURI.startsWith("/api/userservice/staffs/register")) {
+        if (requestURI.startsWith("/api/paymentservice/create") ) {
             chain.doFilter(request, response);
             return;
         }

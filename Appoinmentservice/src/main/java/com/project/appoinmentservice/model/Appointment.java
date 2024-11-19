@@ -34,11 +34,12 @@ public class Appointment {
     @Column(name = "slot")
     private Integer slot;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private AppointmentStatus status;
 
     @Column(name = "price", precision = 18, scale = 2)  // precision: tổng số chữ số, scale: số chữ số sau dấu thập phân
-    private BigDecimal price;
+    private BigDecimal paymentAmount;
 
     @Column(name = "patientEmail")  // precision: tổng số chữ số, scale: số chữ số sau dấu thập phân
     private String patientEmail;
@@ -100,20 +101,20 @@ public class Appointment {
         this.slot = slot;
     }
 
-    public String getStatus() {
+    public AppointmentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
     public String getPatientEmail() {
@@ -136,14 +137,14 @@ public class Appointment {
     public String toString() {
         return "Appointment{" +
                 "appointmentId=" + appointmentId +
-                ", patientId='" + patientId + '\'' +
-                ", doctorId='" + doctorId + '\'' +
-                ", staffId='" + staffId + '\'' +
+                ", patientId=" + patientId +
+                ", doctorId=" + doctorId +
+                ", staffId=" + staffId +
                 ", appointmentDate=" + appointmentDate +
                 ", medicalDay=" + medicalDay +
                 ", slot=" + slot +
-                ", status='" + status + '\'' +
-                ", price=" + price +
+                ", status=" + status +
+                ", paymentAmount=" + paymentAmount +
                 ", patientEmail='" + patientEmail + '\'' +
                 '}';
     }

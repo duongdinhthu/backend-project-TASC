@@ -10,19 +10,56 @@ public class PaymentRequest {
     private Integer patientId;
     private Integer appointmentId;
     private BigDecimal paymentAmount;
-    private String paymentCurrency;
-    private String paymentEncryption;
-    // Getters and setters
+    private String orderID;            // Thêm trường orderID
+    private String payerID;            // Thêm trường payerID
+    private String paymentID;          // Thêm trường paymentID
+    private String paymentSource;      // Thêm trường paymentSource
+    private String facilitatorAccessToken; // Thêm trường facilitatorAccessToken
 
 
 
-    public String getPaymentEncryption() {
-        return paymentEncryption;
+
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setPaymentEncryption(String paymentEncryption) {
-        this.paymentEncryption = paymentEncryption;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
+
+    public String getPayerID() {
+        return payerID;
+    }
+
+    public void setPayerID(String payerID) {
+        this.payerID = payerID;
+    }
+
+    public String getPaymentID() {
+        return paymentID;
+    }
+
+    public void setPaymentID(String paymentID) {
+        this.paymentID = paymentID;
+    }
+
+    public String getPaymentSource() {
+        return paymentSource;
+    }
+
+    public void setPaymentSource(String paymentSource) {
+        this.paymentSource = paymentSource;
+    }
+
+    public String getFacilitatorAccessToken() {
+        return facilitatorAccessToken;
+    }
+
+    public void setFacilitatorAccessToken(String facilitatorAccessToken) {
+        this.facilitatorAccessToken = facilitatorAccessToken;
+    }
+
+
 
     public Integer getPatientId() {
         return patientId;
@@ -48,15 +85,6 @@ public class PaymentRequest {
         this.paymentAmount = paymentAmount;
     }
 
-    public String getPaymentCurrency() {
-        return paymentCurrency;
-    }
-
-    public void setPaymentCurrency(String paymentCurrency) {
-        this.paymentCurrency = paymentCurrency;
-    }
-
-
 
     @Override
     public String toString() {
@@ -64,7 +92,11 @@ public class PaymentRequest {
                 "patientId=" + patientId +
                 ", appointmentId=" + appointmentId +
                 ", paymentAmount=" + paymentAmount +
-                ", paymentCurrency='" + paymentCurrency + '\'' +
+                ", orderID='" + orderID + '\'' +
+                ", payerID='" + payerID + '\'' +
+                ", paymentID='" + paymentID + '\'' +
+                ", paymentSource='" + paymentSource + '\'' +
+                ", facilitatorAccessToken='" + facilitatorAccessToken + '\'' +
                 '}';
     }
 }

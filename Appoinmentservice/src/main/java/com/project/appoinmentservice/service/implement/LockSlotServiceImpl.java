@@ -22,6 +22,7 @@ public class LockSlotServiceImpl implements LockSlotService {
         System.out.println(existingLockSlot);
         return existingLockSlot == null;
     }
+
     @Override
     public boolean checkIfCodeExists(String randomCode) {
         for (LockSlotDTO lockSlot : lockedSlots.values()) {
@@ -77,7 +78,7 @@ public class LockSlotServiceImpl implements LockSlotService {
             case "RANDOM_UNLOCKED":
                 System.out.println("Slot này đã được khóa trước đó, không khóa lại!");
                 getAllLockSlots();
-                return ResponseEntity.status(400).body(new ResponseDTO(400, "Slot này đã được khóa trước đó, không khóa lại!"));
+                return ResponseEntity.status(200).body(new ResponseDTO(400, "Slot này đã được khóa trước đó, đã mở slot . vui lòng chọn lại"));
 
             case "NOT_RANDOM_LOCKED":
                 lockSlot(lockSlotDTO);
@@ -88,10 +89,10 @@ public class LockSlotServiceImpl implements LockSlotService {
             case "NOT_RANDOM_UNLOCKED":
                 System.out.println("Slot này đã khóa, vui lòng chọn slot khác!");
                 getAllLockSlots();
-                return ResponseEntity.status(409).body(new ResponseDTO(409, "Slot này đã khóa, vui lòng chọn slot khác!"));
+                return ResponseEntity.status(200).body(new ResponseDTO(409, "Slot này đã khóa, vui lòng chọn slot khác!"));
 
             default:
-                return ResponseEntity.status(500).body(new ResponseDTO(500, "Lỗi không xác định"));
+                return ResponseEntity.status(200).body(new ResponseDTO(500, "Lỗi không xác định"));
         }
     }
 
