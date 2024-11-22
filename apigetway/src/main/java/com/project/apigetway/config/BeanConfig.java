@@ -31,6 +31,12 @@ public class BeanConfig {
                 .route("UserServicePublic", r -> r.path("/api/userservice/notjwt/**")
                         .uri("lb://USERSERVICE"))  // Load balance đến USERSERVICE (không cần filter)
 
+                .route("Notification", r -> r.path("/api/notifications/**")
+                        .uri("lb://NOTIFICATION"))  // Load balance đến USERSERVICE (không cần filter)
+
+                .route("Notification", r -> r.path("/ws/notification")
+                        .uri("lb://NOTIFICATION"))  // Load balance đến USERSERVICE (không cần filter)
+
                 .route("Transactionn", r -> r.path("/api/transactions/**")
                         .uri("lb://TRANSACTIONN"))
                 // Route cho AppointmentService

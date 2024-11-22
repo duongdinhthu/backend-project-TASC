@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 
 public interface AppointmntTransactionService {
     public AppointmentTransaction saveAppointmentTransaction(AppointmentTransaction appointmentTransaction);
+    public void delete(AppointmentTransaction appointmentTransaction);
 }

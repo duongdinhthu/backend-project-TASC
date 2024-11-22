@@ -72,7 +72,7 @@ public class SendEmailImpl implements SendEmail {
         }
     }
     @Override
-    public void sendEmailFormRegisterAppointment(String doctorName, String departmentName, String medicalDay, String patientEmail, String patientName,String timeSlot) {
+    public void sendEmailFormRegisterAppointment( String medicalDay, String patientEmail,String timeSlot) {
         final String username = "thuddth2307004@fpt.edu.vn";
         final String password = "kyxm zvbz nvsn uxxx";
         String subject = "Appointment Notification";
@@ -92,10 +92,8 @@ public class SendEmailImpl implements SendEmail {
                 "<h2>Appointment Notification</h2>" +
                 "</div>" +
                 "<div class='content'>" +
-                "<p>Hi <strong>" + patientName + "</strong>,</p>" +
+                "<p>Hi <strong>"  +
                 "<p>You have successfully booked an appointment at FPT Health.</p>" +
-                "<p><strong>Your department:</strong> " + departmentName + "</p>" +
-                "<p><strong>Your doctor:</strong> " + doctorName + "</p>" +
                 "<p><strong>Your appointment date:</strong> " + medicalDay + "</p>" +
                 "<p><strong>Your appointment time:</strong> " + timeSlot + "</p>" +
                 "<p>Our staff will contact you to give you detailed instructions. Best regards!</p>" +

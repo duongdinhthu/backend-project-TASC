@@ -14,12 +14,6 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "patient_id", nullable = false)
-    private Integer patientId;
-
-    @Column(name = "appointment_id")
-    private Integer appointmentId;
-
     @Column(name = "payment_amount", nullable = false)
     private BigDecimal paymentAmount;
 
@@ -69,13 +63,7 @@ public class Payment {
         this.id = id;
     }
 
-    public Integer getPatientId() {
-        return patientId;
-    }
 
-    public void setPatientId(Integer patientId) {
-        this.patientId = patientId;
-    }
 
     public BigDecimal getPaymentAmount() {
         return paymentAmount;
@@ -86,13 +74,7 @@ public class Payment {
     }
 
 
-    public Integer getAppointmentId() {
-        return appointmentId;
-    }
 
-    public void setAppointmentId(Integer appointmentId) {
-        this.appointmentId = appointmentId;
-    }
 
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
@@ -165,8 +147,6 @@ public class Payment {
     public String toString() {
         return "Payment{" +
                 "id=" + id +
-                ", patientId=" + patientId +
-                ", appointmentId=" + appointmentId +
                 ", paymentAmount=" + paymentAmount +
                 ", paymentStatus=" + paymentStatus +
                 ", createdAt=" + createdAt +

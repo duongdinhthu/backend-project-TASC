@@ -3,10 +3,7 @@ package com.project.appoinmentservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.project.appoinmentservice.dto.AppointmentRequestDTO;
-import com.project.appoinmentservice.dto.LockSlotDTO;
-import com.project.appoinmentservice.dto.PaymentRequest;
-import com.project.appoinmentservice.dto.ResponseDTO;
+import com.project.appoinmentservice.dto.*;
 import com.project.appoinmentservice.model.Appointment;
 import com.project.appoinmentservice.service.AppointmentService;
 import com.project.appoinmentservice.service.LockSlotService;
@@ -40,8 +37,9 @@ public class AppointmentController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> register(@RequestBody AppointmentRequestDTO requestData) {
+    public ResponseEntity<TransactionResponseDto> register(@RequestBody AppointmentRequestDTO requestData) {
         System.out.println("dữ liệu đã nhận " + requestData.toString());
+        System.out.println("dữ liệu trả về :" + appointmentService.register(requestData).toString());
         return appointmentService.register(requestData);
 
     }

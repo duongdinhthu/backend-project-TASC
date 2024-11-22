@@ -17,9 +17,18 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction saveTransaction(Transaction transaction) {
         transaction.setReferenceGroupId(generateReferenceGroupId());
-        transaction.setStatus("pending");
+        transaction.setStatus("PENDING");
         return transactionRepository.save(transaction);
     }
+    @Override
+    public Transaction updateTansaction(Transaction transaction){
+        return transactionRepository.save(transaction);
+    }
+    @Override
+    public void delete(Transaction transaction) {
+        transactionRepository.delete(transaction);
+    }
+
     private static String generateReferenceGroupId() {
         return "REF-" + UUID.randomUUID().toString().replace("-", "").substring(0, 8).toUpperCase();
     }

@@ -16,4 +16,10 @@ public class AppointmntTransactionServiceImpl implements AppointmntTransactionSe
     public AppointmentTransaction saveAppointmentTransaction(AppointmentTransaction appointmentTransaction) {
         return appointmentTransactionRepository.save(appointmentTransaction);
     }
+
+    @Override
+    public void delete(AppointmentTransaction appointmentTransaction) {
+        appointmentTransactionRepository.delete(appointmentTransaction);
+    }
 }
+

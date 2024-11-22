@@ -16,7 +16,7 @@ public class PaymentTransaction {
     private Transaction transaction; // Mối quan hệ với bảng Transaction
 
     @Column(nullable = false)
-    private Integer paymentId; // ID thanh toán.
+    private String orderID;
 
     @Column(name = "status" , nullable = false)
     private String status; // Trạng thái giao dịch thanh toán.
@@ -48,14 +48,21 @@ public class PaymentTransaction {
         this.transaction = transaction;
     }
 
-    public Integer getPaymentId() {
-        return paymentId;
+    public String getOrderID() {
+        return orderID;
     }
 
-    public void setPaymentId(Integer paymentId) {
-        this.paymentId = paymentId;
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -70,8 +77,8 @@ public class PaymentTransaction {
         return "PaymentTransaction{" +
                 "id=" + id +
                 ", transaction=" + transaction +
-                ", paymentId=" + paymentId +
-                ", status=" + status +
+                ", orderID='" + orderID + '\'' +
+                ", status='" + status + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }

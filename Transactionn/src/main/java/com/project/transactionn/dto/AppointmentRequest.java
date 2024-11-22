@@ -1,12 +1,23 @@
 package com.project.transactionn.dto;
 
-public class AppontmentRequest {
+import java.math.BigDecimal;
+
+public class AppointmentRequest {
     private Integer appointmentId;
     private String status;
-    private String orderID;
+    private BigDecimal paymentAmount;
+    private String randomCode; // Mã random
 
     public Integer getAppointmentId() {
         return appointmentId;
+    }
+
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
     }
 
     public void setAppointmentId(Integer appointmentId) {
@@ -21,12 +32,12 @@ public class AppontmentRequest {
         this.status = status;
     }
 
-    public String getOrderID() {
-        return orderID;
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
     @Override
@@ -34,7 +45,8 @@ public class AppontmentRequest {
         return "AppontmentRequest{" +
                 "appointmentId=" + appointmentId +
                 ", status='" + status + '\'' +
-                ", orderID='" + orderID + '\'' +
+                ", paymentAmount=" + paymentAmount +
+                ", randomCode='" + randomCode + '\'' +
                 '}';
     }
 }

@@ -1,10 +1,20 @@
 package com.project.appoinmentservice.dto;
 
+import java.math.BigDecimal;
+
 public class AppoinmntTransactionDTO {
     private Integer appointmentId;
     private String status;
-    private String orderID;
+    private BigDecimal paymentAmount;  // Số tiền thanh toán
+    private String randomCode; // Mã random
 
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
+    }
 
     public Integer getAppointmentId() {
         return appointmentId;
@@ -22,11 +32,21 @@ public class AppoinmntTransactionDTO {
         this.status = status;
     }
 
-    public String getOrderID() {
-        return orderID;
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "AppoinmntTransactionDTO{" +
+                "appointmentId=" + appointmentId +
+                ", status='" + status + '\'' +
+                ", orderID='" + paymentAmount + '\'' +
+                ", randomCode='" + randomCode + '\'' +
+                '}';
     }
 }
