@@ -21,8 +21,16 @@ public class AppointmentRequestDTO {
     private String paymentSource;      // Thêm trường paymentSource
     private String facilitatorAccessToken; // Thêm trường facilitatorAccessToken
     private BigDecimal paymentAmount;  // Số tiền thanh toán
-
+    private String randomCode;
     public AppointmentRequestDTO() {
+    }
+
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
     }
 
     public Integer getPatientId() {
@@ -175,6 +183,7 @@ public class AppointmentRequestDTO {
                 ", paymentSource='" + paymentSource + '\'' +
                 ", facilitatorAccessToken='" + facilitatorAccessToken + '\'' +
                 ", paymentAmount=" + paymentAmount +
+                ", randomCode='" + randomCode + '\'' +
                 '}';
     }
 }

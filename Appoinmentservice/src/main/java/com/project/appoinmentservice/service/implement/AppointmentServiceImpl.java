@@ -129,6 +129,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public ResponseEntity<Map<String, Object>> register(AppointmentRequestDTO appointmentRequestDTO) {
         System.out.println("gọi hàm register");
+        System.out.println(appointmentRequestDTO.toString());
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -153,6 +154,8 @@ public class AppointmentServiceImpl implements AppointmentService {
                 appointmentTransactionDTO.setAppointmentId(savedAppointment.getAppointmentId());
                 appointmentTransactionDTO.setOrderID(appointmentRequestDTO.getOrderID());
                 appointmentTransactionDTO.setStatus(String.valueOf(AppointmentStatus.CONFIRMED));
+                appointmentTransactionDTO.setRandomCode(appointmentRequestDTO.getRandomCode());
+                System.out.println(appointmentTransactionDTO.toString());
                 transactionSuccess(appointmentTransactionDTO);
             } else {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(response);

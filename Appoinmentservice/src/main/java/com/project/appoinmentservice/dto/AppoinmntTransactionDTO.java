@@ -4,10 +4,18 @@ public class AppoinmntTransactionDTO {
     private Integer appointmentId;
     private String status;
     private String orderID;
-
+    private String randomCode;
 
     public Integer getAppointmentId() {
         return appointmentId;
+    }
+
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
     }
 
     public void setAppointmentId(Integer appointmentId) {
@@ -28,5 +36,16 @@ public class AppoinmntTransactionDTO {
 
     public void setOrderID(String orderID) {
         this.orderID = orderID;
+    }
+
+
+    @Override
+    public String toString() {
+        return "AppoinmntTransactionDTO{" +
+                "appointmentId=" + appointmentId +
+                ", status='" + status + '\'' +
+                ", orderID='" + orderID + '\'' +
+                ", randomCode='" + randomCode + '\'' +
+                '}';
     }
 }

@@ -4,9 +4,17 @@ public class AppontmentRequest {
     private Integer appointmentId;
     private String status;
     private String orderID;
-
+    private String randomCode;
     public Integer getAppointmentId() {
         return appointmentId;
+    }
+
+    public String getRandomCode() {
+        return randomCode;
+    }
+
+    public void setRandomCode(String randomCode) {
+        this.randomCode = randomCode;
     }
 
     public void setAppointmentId(Integer appointmentId) {
@@ -35,6 +43,7 @@ public class AppontmentRequest {
                 "appointmentId=" + appointmentId +
                 ", status='" + status + '\'' +
                 ", orderID='" + orderID + '\'' +
+                ", randomCode='" + randomCode + '\'' +
                 '}';
     }
 }

@@ -11,10 +11,10 @@ import org.springframework.web.client.RestTemplate;
 
 public class PaymentTransactionServiceImpl implements PaymentTransactionService {
 
-    private final RestTemplate restTemplate  = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void sendRequestPaymentService(PaymentRequestOrderId paymentRequestOrderId) {
+    public boolean sendRequestPaymentService(PaymentRequestOrderId paymentRequestOrderId) {
         System.out.println("gọi sang payment service");
         String url = "http://localhost:8080/api/paymentservice/create";
         HttpHeaders headers = new HttpHeaders();
@@ -23,9 +23,10 @@ public class PaymentTransactionServiceImpl implements PaymentTransactionService 
         try {
             ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
             System.out.println("API Response Status: " + response.getStatusCode());
-
+            return true;
         } catch (Exception e) {
             System.err.println("Lỗi khi gọi API Transaction: " + e.getMessage());
+            return false;
         }
     }
 }

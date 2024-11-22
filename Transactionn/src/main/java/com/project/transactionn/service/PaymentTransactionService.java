@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 
 public interface PaymentTransactionService {
-    public void sendRequestPaymentService(PaymentRequestOrderId paymentRequestOrderId);
+    public boolean sendRequestPaymentService(PaymentRequestOrderId paymentRequestOrderId);
 }
