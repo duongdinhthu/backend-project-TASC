@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +91,12 @@ public class PatientServiceImpl implements PatientService {
     public List<Patients> findAllPatients() {
         System.out.println("Fetching patients from database...");
         return patientRepository.findAll();
+    }
+    @CacheEvict(value = "patientsAll", allEntries = true) // Xóa toàn bộ cache
+    @Scheduled(cron = "0 0 0 * * ?") // Chạy vào 0:00 mỗi ngày
+    public void refreshPatientsAllCache() {
+        System.out.println("Refreshing cache for patientsAll...");
+        findAllPatients(); // Gọi lại để làm mới cache
     }
     @Override
     public List<Patients> findAlPatients() {
