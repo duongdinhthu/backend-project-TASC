@@ -6,8 +6,13 @@ import com.project.userservice.repository.PatientRepository;
 import com.project.userservice.service.PasswordService;
 import com.project.userservice.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -29,15 +34,32 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patients checkEmail(Patients patients) {
-        Patients patient = patientRepository.findByPatientEmail(patients.getPatientEmail());
+        Patients patient = findPatientByEmail(patients.getPatientEmail()); // Gọi method có @Cacheable
         if (patient == null) {
             patients.setPatientPassword(passwordEncoder.encode(passwordService.generateRandomPassword()));
             Patients savedPatient = patientRepository.save(patients);
+
+            // Cập nhật cache
+            updatePatientCache(savedPatient.getPatientEmail(), savedPatient);
+
+            // Gửi email
             sendEmail.sendEmail(savedPatient.getPatientName(), savedPatient.getPatientEmail(), savedPatient.getPatientPassword());
             return savedPatient;
         } else {
             return patient;
         }
+    }
+
+    @CachePut(value = "patients", key = "#email")
+    public void updatePatientCache(String email, Patients patient) {
+        System.out.println("Updating cache...");
+    }
+
+
+    @Cacheable(value = "patients", key = "#email")
+    public Patients findPatientByEmail(String email) {
+        System.out.println("Fetching patient from database...");
+        return patientRepository.findByPatientEmail(email);
     }
 
     @Override
@@ -55,6 +77,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @CachePut(value = "patients", key = "#patient.patientEmail")
     public Patients changePassword(ChangePasswordRequest changePasswordRequest) {
         Patients patient = patientRepository.findByPatientEmail(changePasswordRequest.getEmail());
         if (patient == null) return null;
@@ -62,4 +85,21 @@ public class PatientServiceImpl implements PatientService {
         patient.setPatientPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
         return patientRepository.save(patient);
     }
+    @Override
+    @Cacheable(value = "patientsAll")
+    public List<Patients> findAllPatients() {
+        System.out.println("Fetching patients from database...");
+        return patientRepository.findAll();
+    }
+    @Override
+    public List<Patients> findAlPatients() {
+        System.out.println("Check1.");
+        return patientRepository.findAll();
+    }
+    @Override
+    @CacheEvict(value = "patients", key = "#email")
+    public void deletePatientByEmail(String email) {
+        patientRepository.deleteByPatientEmail(email);
+    }
+
 }

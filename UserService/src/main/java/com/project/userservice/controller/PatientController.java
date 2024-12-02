@@ -3,16 +3,15 @@ package com.project.userservice.controller;
 import com.project.userservice.dto.ChangePasswordRequest;
 import com.project.userservice.dto.PatientRegistrationDto;
 import com.project.userservice.model.Patients;
+import com.project.userservice.model.Role;
 import com.project.userservice.service.PatientService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,6 +25,7 @@ public class PatientController {
 
     @PostMapping("/register")
     public ResponseEntity<Patients> registerPatient(@RequestBody PatientRegistrationDto registrationDto) {
+        System.out.println("dữ liệu đã nhận :" + registrationDto.toString());
         ModelMapper modelMapper = new ModelMapper();
         Patients patient = modelMapper.map(registrationDto, Patients.class);
         return ResponseEntity.ok(patientService.registerPatient(patient));

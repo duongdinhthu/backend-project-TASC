@@ -43,7 +43,6 @@ public class AppointmentController {
     public ResponseEntity<Map<String, Object>> register(@RequestBody AppointmentRequestDTO requestData) {
         System.out.println("dữ liệu đã nhận " + requestData.toString());
         return appointmentService.register(requestData);
-
     }
 
 

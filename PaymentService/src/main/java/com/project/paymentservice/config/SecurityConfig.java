@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/paymentservice/create").permitAll()
+                                .requestMatchers("/swagger-ui/**","/v3/api-docs/**","/swagger-ui.html").permitAll()
                                 .requestMatchers("/api/paymentservice/**").hasRole("PATIENT")
                                 .requestMatchers("/api/paymentservice/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PatientRepository extends JpaRepository<Patients, Integer> {
     Patients findByPatientEmail(String email);
+    public void deleteByPatientEmail(String email);
 }

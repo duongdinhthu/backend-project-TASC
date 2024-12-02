@@ -1,19 +1,21 @@
 package com.project.appoinmentservice.service.implement;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.project.appoinmentservice.dto.AppoinmntTransactionDTO;
-import com.project.appoinmentservice.dto.AppointmentRequestDTO;
-import com.project.appoinmentservice.dto.PatientRequest;
-import com.project.appoinmentservice.dto.PaymentRequest;
+import com.project.appoinmentservice.dto.*;
 import com.project.appoinmentservice.model.Appointment;
 import com.project.appoinmentservice.model.AppointmentStatus;
 import com.project.appoinmentservice.repository.AppointmentRepository;
 import com.project.appoinmentservice.service.AppointmentService;
 import com.project.appoinmentservice.service.SendEmail;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,11 +26,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
+
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    private static final String TOPIC = "appointment";
 
     private final RestTemplate restTemplate  = new RestTemplate();
 
@@ -126,6 +135,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
 
+
     @Override
     public ResponseEntity<Map<String, Object>> register(AppointmentRequestDTO appointmentRequestDTO) {
         System.out.println("gọi hàm register");
@@ -172,5 +182,20 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
     }
 
+    @KafkaListener(topics = "transaction", groupId = "appointment-group")
+    public void consume(@Payload String payload) throws JsonProcessingException {
+        ClientRequestDTO clientRequest = new ObjectMapper().readValue(payload, ClientRequestDTO.class);
+        System.out.println("dữ liệu đã nhận :" + clientRequest);
+        ModelMapper modelMapper = new ModelMapper();
+        Appointment appointment = modelMapper.map(clientRequest, Appointment.class);
+        Appointment savedAppointment = saveAppointment(appointment);
+        if (savedAppointment != null) {
+            responseToTransaction();
+        }
+    }
+
+    public void responseToTransaction(){
+        kafkaTemplate.send(TOPIC, "success");
+    }
 
 }

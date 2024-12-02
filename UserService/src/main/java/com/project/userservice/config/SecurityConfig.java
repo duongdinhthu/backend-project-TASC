@@ -33,6 +33,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/userservice/notjwt/**").permitAll() // Không yêu cầu JWT
+                                .requestMatchers("/swagger-ui/**","/v3/api-docs/**","/swagger-ui.html").permitAll()
+                                .requestMatchers("/redis/**").permitAll() // Không yêu cầu JWT
                                 .requestMatchers("/api/userservice/jwt/patient/").hasRole("PATIENT") // Quyền bệnh nhân
                                 .requestMatchers("/api/userservice/jwt/doctor/").hasRole("DOCTOR")   // Quyền bác sĩ
                                 .requestMatchers("/api/userservice/jwt/staff/").hasRole("STAFF")     // Quyền nhân viên
